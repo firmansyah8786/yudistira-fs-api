@@ -29,6 +29,7 @@ class PortofolioController extends Controller
         $request->validate([
             'title'=>'required',
             'description'=>'required',
+            'type'=>'required|in:company,personal',
             'detail'=>'required',
         ]);
 
@@ -36,6 +37,7 @@ class PortofolioController extends Controller
             $portofolio = Portofolio::create([
                 'title'=>$request->title,
                 'description'=>$request->description,
+                'type'=>$request->type,
                 'detail'=>$request->detail,
             ]);
         } catch (\Throwable $th) {
