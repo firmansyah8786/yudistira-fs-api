@@ -38,6 +38,7 @@ class PortofolioController extends Controller
                 'title'=>$request->title,
                 'description'=>$request->description,
                 'type'=>$request->type,
+                'nda'=>($request->nda) ? $request->nda : false,
                 'detail'=>$request->detail,
             ]);
         } catch (\Throwable $th) {

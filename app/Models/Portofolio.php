@@ -13,6 +13,7 @@ class Portofolio extends Model
 
     protected $casts = [
         'detail' => 'json',
+        'nda'=>'boolean'
     ];
 
     public function portofolioImages(){
