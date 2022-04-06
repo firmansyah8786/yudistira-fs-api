@@ -12,24 +12,6 @@ class PortofolioImage extends Model
 
     protected $guarded = [];
 
-    protected $appends = ['image_url'];
-
-    public function getImageUrlAttribute()
-    {
-        $expiresAt = Carbon::now();
-        $expiresAt->addSeconds(30);
-
-        $imageReference = app('firebase.storage')->getBucket()->object($this->url);
-
-        if ($imageReference->exists()) {
-          $image = $imageReference->signedUrl($expiresAt);
-        } else {
-          $image = null;
-        }
-
-        return $image;
-    }
-
     public function portofolio(){
         return $this->belongsTo(Portofolio::class);
     }

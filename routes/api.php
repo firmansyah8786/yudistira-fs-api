@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('portofolio')->group(function () {
     Route::get('/',[PortofolioController::class,"index"]);
     Route::get('/{id}/image',[PortofolioController::class,"getImage"]);
+    Route::get('/{id}/image/{imageId}/url',[PortofolioController::class,"getImageUrl"]);
     Route::middleware('api_key')->group(function(){
         Route::post('/',[PortofolioController::class,"store"]);
         Route::post('/{id}/image',[PortofolioController::class,"storeImage"]);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Portofolio;
 use App\Models\PortofolioImage;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -154,5 +155,26 @@ class PortofolioController extends Controller
         }
 
         return response()->json(['msg'=>'Image deleted']);
+    }
+
+    public function getImageUrl(Request $request, $id, $imageId)
+    {
+        $portofolioImage = PortofolioImage::orderBy('index')
+            ->where('portofolio_id',$id)
+            ->where('id',$imageId)
+            ->first();
+
+        $expiresAt = Carbon::now();
+        $expiresAt->addSeconds(30);
+
+        $imageReference = app('firebase.storage')->getBucket()->object($portofolioImage->url);
+
+        if ($imageReference->exists()) {
+            $image = $imageReference->signedUrl($expiresAt);
+        } else {
+            $image = "";
+        }
+
+        return response()->json(['image_url'=>$image]);
     }
 }
